@@ -118,10 +118,13 @@ function init() {
                 funEngineer();
             } else {
                 //finish HTML
-                console.log("finish HTML")
+                console.log("finish HTML");
+                end();
             }
+            
             fileContents = genHtmlCard(management);
-            //writeToFile("index.html", fileContents);//finish writing html file
+            
+            writeToFile("./dist/index.html", fileContents);//finish writing html file
             console.log(fileContents);
 
         })
@@ -144,9 +147,10 @@ function funIntern() {
             } else {
                 //finish HTML
                 console.log("finish HTML")
+                end();
             }
             fileContents = genHtmlCard(intern);
-            //writeToFile("README.md", fileContents);
+            writeToFile("./dist/index.html", fileContents);
             //console.log(fileContents);
 
         })
@@ -169,12 +173,18 @@ function funEngineer() {
             } else {
                 //finish HTML
                 console.log("finish HTML")
+                end();
             }
             fileContents = genHtmlCard(engineer);
-            //writeToFile("README.md", fileContents);
+            writeToFile("./dist/index.html", fileContents);
             //console.log(fileContents);
 
         })
+}
+
+function end(){
+    fileContents = '</body></html>';
+    writeToFile("./dist/index.html", fileContents);
 }
 
 
