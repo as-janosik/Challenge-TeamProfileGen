@@ -1,4 +1,4 @@
-// TODO: Include packages needed for this application
+
 const inquirer = require('inquirer');
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
@@ -6,7 +6,7 @@ const Engineer = require("./lib/Engineer");
 const fs = require('fs');
 const genHtmlCard = require('./dist/generateHTML.js');
 let fileContents = '';
-// TODO: Create an array of questions for user input
+
 const managerQ = [
     {
         type: 'input',
@@ -35,6 +35,7 @@ const managerQ = [
         choices: ['Engineer', 'Intern', 'Finish'],
     },
 ];
+
 const internQ = [
     {
         type: 'input',
@@ -63,6 +64,7 @@ const internQ = [
         choices: ['Engineer', 'Intern', 'Finish'],
     },
 ];
+
 const engineerQ = [
     {
         type: 'input',
@@ -92,40 +94,39 @@ const engineerQ = [
     },
 ];
 
-// TODO: Create a function to write HTML file
 function writeToFile(fileName, data) {
-    //write data to file here.
+
     fs.appendFile(fileName, data, (err) =>
-        err ? console.error(err) : console.log('Commit logged!')
+        err ? console.error(err) : console.log()
     )
 }
 
-// TODO: Create a function to initialize app
 function init() {
     inquirer
         .prompt(managerQ)
         .then((response) => {
             const management = new Manager(response.offNum, response.fname, response.id, response.email)
-            console.log(management);
-            console.log(management.getRole());
-            if (response.choice === "Intern") {
-                //do something here
-                //console.log("I am Intern")
-                funIntern();
-            }
-            else if (response.choice === "Engineer") {
-                //console.log("I am Engineer")
-                funEngineer();
-            } else {
-                //finish HTML
-                console.log("finish HTML");
-                end();
-            }
             
             fileContents = genHtmlCard(management);
             
-            writeToFile("./dist/index.html", fileContents);//finish writing html file
-            console.log(fileContents);
+            writeToFile("./dist/index.html", fileContents);
+
+            if (response.choice === "Intern") {
+
+                //funIntern();
+                setTimeout(function(){funIntern();},5000);
+
+            }
+            else if (response.choice === "Engineer") {
+
+                //funEngineer();
+                setTimeout(function(){funEngineer();},5000);
+
+            } else {
+
+                setTimeout(function(){end();},5000);
+
+            }
 
         })
 }
@@ -135,23 +136,24 @@ function funIntern() {
         .prompt(internQ)
         .then((response) => {
             const intern = new Intern(response.school, response.fname, response.id, response.email)
-            console.log(intern);
-            if (response.choice === "Intern") {
-                //do something here
-                //console.log("I am Intern")
-                funIntern();
-            }
-            else if (response.choice === "Engineer") {
-                //console.log("I am Engineer")
-                funEngineer();
-            } else {
-                //finish HTML
-                console.log("finish HTML")
-                end();
-            }
+            
             fileContents = genHtmlCard(intern);
             writeToFile("./dist/index.html", fileContents);
-            //console.log(fileContents);
+
+            if (response.choice === "Intern") {
+
+                //funIntern();
+                setTimeout(function(){funIntern();},5000);
+            }
+            else if (response.choice === "Engineer") {
+
+                //funEngineer();
+                setTimeout(function(){funEngineer();},5000);
+            } else {
+
+                setTimeout(function(){end();},5000);
+
+            }
 
         })
 }
@@ -161,23 +163,25 @@ function funEngineer() {
         .prompt(engineerQ)
         .then((response) => {
             const engineer = new Engineer(response.github, response.fname, response.id, response.email)
-            console.log(engineer);
+            
+                fileContents = genHtmlCard(engineer);
+                writeToFile("./dist/index.html", fileContents);
+
             if (response.choice === "Intern") {
-                //do something here
-                console.log("I am Intern")
-                funIntern();
+
+                //funIntern();
+                setTimeout(function(){funIntern();},5000);
             }
             else if (response.choice === "Engineer") {
-                console.log("I am Engineer")
-                funEngineer();
+
+                //funEngineer();
+                setTimeout(function(){funEngineer();},5000);
+
             } else {
-                //finish HTML
-                console.log("finish HTML")
-                end();
+
+                setTimeout(function(){end();},5000);
+
             }
-            fileContents = genHtmlCard(engineer);
-            writeToFile("./dist/index.html", fileContents);
-            //console.log(fileContents);
 
         })
 }
@@ -186,7 +190,6 @@ function end(){
     fileContents = '</body></html>';
     writeToFile("./dist/index.html", fileContents);
 }
-
 
 // Function call to initialize app
 init();
